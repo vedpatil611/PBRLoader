@@ -20,6 +20,7 @@ IncludeDirs["GLAD"] = "Dependencies/GLAD/include"
 IncludeDirs["FreeImage"] = "Dependencies/FreeImage/include"
 IncludeDirs["ImGui"] = "Dependencies/ImGui/src"
 IncludeDirs["Assimp"] = "Dependencies/assimp/inlude"
+IncludeDirs["GLM"] = "Dependencies/GLM"
 
 project "PBRLoader"
 	location "PBRLoader"
@@ -37,7 +38,8 @@ project "PBRLoader"
 		"%{IncludeDirs.GLFW}",
 		"%{IncludeDirs.GLAD}",
 		"%{IncludeDirs.FreeImage}",
-		"%{IncludeDirs.Assimp}"
+		"%{IncludeDirs.Assimp}",
+		"%{IncludeDirs.GLM}"
 	}
 	
 	libdirs {
