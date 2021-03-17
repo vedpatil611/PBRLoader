@@ -44,10 +44,12 @@ project "PBRLoader"
 		"Dependencies/FreeImage/libs",
 		"Dependencies/assimp/lib"
 	}
+
 	links {
 		"GLFW",
 		"GLAD",
 		"ImGui",
+		"FreeImage",
 		"assimp-vc142-mt"
 	}
 
