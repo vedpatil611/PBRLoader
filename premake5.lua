@@ -19,6 +19,7 @@ IncludeDirs["GLFW"] = "Dependencies/GLFW/include"
 IncludeDirs["GLAD"] = "Dependencies/GLAD/include"
 IncludeDirs["FreeImage"] = "Dependencies/FreeImage/include"
 IncludeDirs["ImGui"] = "Dependencies/ImGui/src"
+IncludeDirs["Assimp"] = "Dependencies/assimp/inlude"
 
 project "PBRLoader"
 	location "PBRLoader"
@@ -36,17 +37,18 @@ project "PBRLoader"
 		"%{IncludeDirs.GLFW}",
 		"%{IncludeDirs.GLAD}",
 		"%{IncludeDirs.FreeImage}",
-		"%{IncludeDirs.ImGui}"
+		"%{IncludeDirs.Assimp}"
 	}
 	
 	libdirs {
-		"Dependencies/FreeImage/libs"
+		"Dependencies/FreeImage/libs",
+		"Dependencies/assimp/lib"
 	}
-
 	links {
 		"GLFW",
 		"GLAD",
-		"ImGui"
+		"ImGui",
+		"assimp-vc142-mt"
 	}
 
 	files { 
@@ -58,6 +60,11 @@ project "PBRLoader"
 	filter "system:windows"
 		cppdialect "C++17"
 		systemversion "latest"
+		
+		postbuildcommands {
+			("{COPY} ../Dependencies/FreeImage/bin ../bin/" ..outputdir.. "/PBRLoader"),
+			("{COPY} ../Dependencies/assimp/bin ../bin/" ..outputdir.. "/PBRLoader")
+		}
 
 	filter "configurations:Debug"
 		defines { "DEBUG" }
