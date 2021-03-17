@@ -22,14 +22,14 @@ Texture::Texture(const char* texPath)
 		dib = FreeImage_Load(fif, texPath);
 
 	if (!dib)
-		throw std::exception("Failed to load texture");
+		throw std::runtime_error("Failed to load texture");
 
 	bits = FreeImage_GetBits(dib);
 	m_Width = FreeImage_GetWidth(dib);
 	m_Heigth = FreeImage_GetHeight(dib);
 
 	if(bits == 0 || m_Width == 0 || m_Heigth == 0)
-		throw std::exception("Failed to load texture");
+		throw std::runtime_error("Failed to load texture");
 
 	glGenTextures(1, &m_TexID);
 	glBindTexture(GL_TEXTURE_2D, m_TexID);

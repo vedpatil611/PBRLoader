@@ -27,7 +27,7 @@ project "PBRLoader"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++17"
-
+	systemversion "latest"
 	inlining "Auto"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
@@ -43,16 +43,14 @@ project "PBRLoader"
 	}
 	
 	libdirs {
-		"Dependencies/FreeImage/libs",
-		"Dependencies/assimp/lib"
+		"Dependencies/FreeImage/libs"
 	}
 
 	links {
 		"GLFW",
 		"GLAD",
 		"ImGui",
-		"FreeImage",
-		"assimp-vc142-mt"
+		"FreeImage"
 	}
 
 	files { 
@@ -64,12 +62,20 @@ project "PBRLoader"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
-		systemversion "latest"
-		
+        links {
+            "assimp-vc142-mt"
+        }
+
 		postbuildcommands {
 			("{COPY} ../Dependencies/FreeImage/bin ../bin/" ..outputdir.. "/PBRLoader"),
 			("{COPY} ../Dependencies/assimp/bin ../bin/" ..outputdir.. "/PBRLoader")
+		}
+
+    filter "system:linux"
+        links {
+			"dl",
+			"pthread",
+            "assimp"
 		}
 
 	filter "configurations:Debug"

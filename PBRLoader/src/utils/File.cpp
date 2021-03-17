@@ -1,5 +1,7 @@
 #include "File.h"
 
+#include <cstring>
+
 namespace Utils
 {
 	std::string readFile(const char* filepath)

@@ -28,7 +28,7 @@ Skybox::Skybox(const char** faceLocations, Shader* shader)
 			dib = FreeImage_Load(fif, faceLocations[i]);
 
 		if (!dib)
-			throw std::exception("Failed to load texture");
+			throw std::runtime_error("Failed to load texture");
 
 		FreeImage_FlipVertical(dib);
 
