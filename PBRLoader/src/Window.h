@@ -21,6 +21,7 @@ public:
 
 	bool shouldClose() const; 
 	void pollEvents();
+	void clearBuffer();
 
 	static void keyCallback(GLFWwindow* windows, int key, int code, int action, int mode);
 };

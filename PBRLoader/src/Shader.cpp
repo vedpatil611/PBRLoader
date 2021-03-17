@@ -18,6 +18,16 @@ Shader::~Shader()
 	glDeleteProgram(m_ShaderID);
 }
 
+void Shader::bind() const
+{
+	glUseProgram(m_ShaderID);
+}
+
+void Shader::unbind() const
+{
+	glUseProgram(0);
+}
+
 unsigned int Shader::compileShader(unsigned int type, const std::string& src)
 {
 	unsigned int id = glCreateShader(type);
@@ -34,7 +44,7 @@ unsigned int Shader::compileShader(unsigned int type, const std::string& src)
 			glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
 			char* message = new char[length];
 			glGetShaderInfoLog(id, length, &length, message);
-			printf("Failed to compile %s shader: %s", (type == GL_VERTEX_SHADER ? "vertex" : "fragment"), message);
+			printf("Failed to compile %s shader: %s\n", (type == GL_VERTEX_SHADER ? "vertex" : "fragment"), message);
 			glDeleteShader(id);
 			delete[] message;
 			return 0;
@@ -55,8 +65,8 @@ unsigned int Shader::createShaderProgram(const std::string& vertexShader, const 
 	glLinkProgram(program);
 	glValidateProgram(program);
 
-	glDeleteProgram(vs);
-	glDeleteProgram(fs);
+	glDeleteShader(vs);
+	glDeleteShader(fs);
 
 	return program;
 }
@@ -74,9 +84,9 @@ unsigned int Shader::createShaderProgram(const std::string& vertexShader, const 
 	glLinkProgram(program);
 	glValidateProgram(program);
 
-	glDeleteProgram(vs);
-	glDeleteProgram(fs);
-	glDeleteProgram(gs);
+	glDeleteShader(vs);
+	glDeleteShader(fs);
+	glDeleteShader(gs);
 
 	return program;
 }

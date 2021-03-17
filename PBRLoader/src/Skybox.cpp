@@ -5,6 +5,7 @@
 #include <FreeImage/FreeImage.h>
 
 Skybox::Skybox(const char** faceLocations, Shader* shader)
+	:m_Shader(shader)
 {
 	glGenTextures(1, &m_TexID);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, m_TexID);
@@ -29,21 +30,23 @@ Skybox::Skybox(const char** faceLocations, Shader* shader)
 		if (!dib)
 			throw std::exception("Failed to load texture");
 
+		FreeImage_FlipVertical(dib);
+
 		bits = FreeImage_GetBits(dib);
 		width = FreeImage_GetWidth(dib);
 		height= FreeImage_GetHeight(dib);
 		bitDepth = FreeImage_GetBPP(dib);
 
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, dib);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, bits);
 
 		FreeImage_Unload(dib);
 	}
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
 	float skyboxVertices[] = {
 		-1.0f,  1.0f, -1.0f,
@@ -97,6 +100,7 @@ Skybox::~Skybox()
 
 void Skybox::draw()
 {
+	m_Shader->bind();
 	glDepthMask(GL_FALSE);
 
 	glActiveTexture(GL_TEXTURE0);
@@ -112,4 +116,5 @@ void Skybox::draw()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	
 	glDepthMask(GL_TRUE);
+	m_Shader->unbind();
 }

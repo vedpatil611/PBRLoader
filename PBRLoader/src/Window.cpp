@@ -57,6 +57,12 @@ void Window::pollEvents()
 	glfwPollEvents();
 }
 
+void Window::clearBuffer()
+{
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
 void Window::keyCallback(GLFWwindow* window, int key, int code, int action, int mode)
 {
 	Window* currentWindow = static_cast<Window*>(glfwGetWindowUserPointer(window));
