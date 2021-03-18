@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 
 Camera::Camera(glm::vec3 pos, glm::vec3 up, float yaw, float pitch, float movementSpeed, float turnSpeed)
-	:m_Pos(pos), m_Up(up), m_Yaw(yaw), m_Pitch(pitch), m_MovementSpeed(movementSpeed), m_TurnSpeed(turnSpeed), m_Front(0.0f, 0.0f, -1.0f)
+	:m_Pos(pos), m_WorldUp(up), m_Yaw(yaw), m_Pitch(pitch), m_MovementSpeed(movementSpeed), m_TurnSpeed(turnSpeed)
 {
 	update();
 }
