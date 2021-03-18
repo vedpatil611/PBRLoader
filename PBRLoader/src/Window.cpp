@@ -36,6 +36,8 @@ Window::Window()
 
 	glfwSetWindowUserPointer(m_Window, this);
 	glfwSetKeyCallback(m_Window, &Window::keyCallback);
+	glfwSetMouseButtonCallback(m_Window, &Window::mouseKeyCallback);
+	glfwSetCursorPosCallback(m_Window, &Window::mousePositionCallback);
 }
 
 Window::~Window()
@@ -47,6 +49,20 @@ Window::~Window()
 void Window::swapBuffer()
 {
 	glfwSwapBuffers(m_Window);
+}
+
+float Window::getXChange()
+{
+	float change = m_xChange;
+	m_xChange = 0;
+	return change;
+}
+
+float Window::getYChange()
+{
+	float change = m_yChange;
+	m_yChange = 0;
+	return change;
 }
 
 bool Window::shouldClose() const
@@ -85,4 +101,37 @@ void Window::keyCallback(GLFWwindow* window, int key, int code, int action, int 
 			currentWindow->getKey()[key] = false;
 		}
 	}
+}
+
+void Window::mouseKeyCallback(GLFWwindow* window, int key, int action, int mods)
+{
+	Window* currentWindow = static_cast<Window*>(glfwGetWindowUserPointer(window));
+
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+	{
+		glfwSetWindowShouldClose(window, true);
+	}
+
+	if (key >= 0 && key < 1024)
+	{
+		if (action == GLFW_PRESS)
+		{
+			currentWindow->getKey()[key] = true;
+		}
+		if (action == GLFW_RELEASE)
+		{
+			currentWindow->getKey()[key] = false;
+		}
+	}
+}
+
+void Window::mousePositionCallback(GLFWwindow* window, double xPos, double yPos)
+{
+	Window* currentWindow = static_cast<Window*>(glfwGetWindowUserPointer(window));
+
+	currentWindow->m_xChange = xPos - currentWindow->m_LastX;
+	currentWindow->m_yChange = currentWindow->m_LastY - yPos;
+
+	currentWindow->m_LastX = xPos;
+	currentWindow->m_LastY = yPos;
 }

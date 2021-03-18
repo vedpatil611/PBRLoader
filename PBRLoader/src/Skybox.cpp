@@ -1,8 +1,12 @@
 #include "Skybox.h"
 
-#include <stdexcept>
 #include <glad/glad.h>
+#include <glm/glm.hpp>
 #include <FreeImage/FreeImage.h>
+#include <stdexcept>
+
+#include "Camera.h"
+#include "Window.h"
 
 Skybox::Skybox(const char** faceLocations, Shader* shader)
 	:m_Shader(shader)
@@ -98,10 +102,11 @@ Skybox::~Skybox()
 {
 }
 
-void Skybox::draw(const Window* window)
+void Skybox::draw(const Window* window, const Camera* camera)
 {
 	m_Shader->bind();
 	m_Shader->setUniformMat4f("uProj", window->getProjectionMatrix());
+	m_Shader->setUniformMat4f("uView", glm::mat4(glm::mat3(camera->getViewMatrix())));
 
 	glDepthMask(GL_FALSE);
 
