@@ -98,9 +98,11 @@ Skybox::~Skybox()
 {
 }
 
-void Skybox::draw()
+void Skybox::draw(const Window* window)
 {
 	m_Shader->bind();
+	m_Shader->setUniformMat4f("uProj", window->getProjectionMatrix());
+
 	glDepthMask(GL_FALSE);
 
 	glActiveTexture(GL_TEXTURE0);

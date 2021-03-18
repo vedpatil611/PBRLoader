@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Shader.h"
+#include "Window.h"
 
 class Skybox
 {
@@ -12,5 +13,5 @@ public:
 	Skybox(const char** faceLocations, Shader* shader);
 	~Skybox();
 
-	void draw();
+	void draw(const Window* window);
 };

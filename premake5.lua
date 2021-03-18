@@ -43,7 +43,8 @@ project "PBRLoader"
 	}
 	
 	libdirs {
-		"Dependencies/FreeImage/libs"
+		"Dependencies/FreeImage/libs",
+		"Dependencies/assimp/lib"
 	}
 
 	links {

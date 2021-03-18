@@ -18,6 +18,11 @@ Shader::~Shader()
 	glDeleteProgram(m_ShaderID);
 }
 
+void Shader::setUniformMat4f(const char* uniformName, const glm::mat4& mat)
+{
+	glUniformMatrix4fv(getUniformLocation(uniformName), 1, false, &mat[0][0]);
+}
+
 void Shader::bind() const
 {
 	glUseProgram(m_ShaderID);
@@ -89,4 +94,16 @@ unsigned int Shader::createShaderProgram(const std::string& vertexShader, const 
 	glDeleteShader(gs);
 
 	return program;
+}
+
+int Shader::getUniformLocation(const char* uniformName)
+{
+	if (m_UniformLocationCache.find(uniformName) != m_UniformLocationCache.end())
+		return m_UniformLocationCache[uniformName];
+
+	int location = glGetUniformLocation(m_ShaderID, uniformName);
+	if (location == -1)
+		printf("\033[1;33m Warning: uniform %s not found\n\033[0;39m", uniformName);
+
+	return location;
 }

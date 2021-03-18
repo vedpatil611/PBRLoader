@@ -25,7 +25,7 @@ int main()
 		window->clearBuffer();
 		window->pollEvents();
 
-		skybox.draw();
+		skybox.draw(window);
 
 		window->swapBuffer();
 

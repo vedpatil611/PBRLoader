@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/gtc/matrix_transform.hpp>
 
 Window::Window()
 	:m_Width(1280), m_Height(720)
@@ -31,6 +32,7 @@ Window::Window()
 		throw std::runtime_error("Failed to init glad");
 
 	glViewport(0, 0, m_BufferWidth, m_BufferHeight);
+	m_Proj = glm::perspective(glm::radians(65.0f), (float) m_BufferWidth / m_BufferHeight, 0.1f, 100.0f);
 
 	glfwSetWindowUserPointer(m_Window, this);
 	glfwSetKeyCallback(m_Window, &Window::keyCallback);
