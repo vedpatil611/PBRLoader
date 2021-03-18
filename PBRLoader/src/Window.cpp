@@ -32,7 +32,7 @@ Window::Window()
 		throw std::runtime_error("Failed to init glad");
 
 	glViewport(0, 0, m_BufferWidth, m_BufferHeight);
-	m_Proj = glm::perspective(glm::radians(65.0f), (float) m_BufferWidth / m_BufferHeight, 0.1f, 100.0f);
+	m_Proj = glm::perspective(glm::radians(65.0f), (float) m_BufferWidth / m_BufferHeight, 0.01f, 100.0f);
 
 	glfwSetWindowUserPointer(m_Window, this);
 	glfwSetKeyCallback(m_Window, &Window::keyCallback);
@@ -129,9 +129,9 @@ void Window::mousePositionCallback(GLFWwindow* window, double xPos, double yPos)
 {
 	Window* currentWindow = static_cast<Window*>(glfwGetWindowUserPointer(window));
 
-	currentWindow->m_xChange = xPos - currentWindow->m_LastX;
-	currentWindow->m_yChange = currentWindow->m_LastY - yPos;
+	currentWindow->m_xChange = static_cast<float>(xPos) - currentWindow->m_LastX;
+	currentWindow->m_yChange = currentWindow->m_LastY - static_cast<float>(yPos);
 
-	currentWindow->m_LastX = xPos;
-	currentWindow->m_LastY = yPos;
+	currentWindow->m_LastX = static_cast<float>(xPos);
+	currentWindow->m_LastY = static_cast<float>(yPos);
 }

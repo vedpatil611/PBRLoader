@@ -63,10 +63,12 @@ project "PBRLoader"
 	}
 
 	filter "system:windows"
-        links {
-            "assimp-vc142-mt"
-        }
-
+		links {
+			"assimp-vc142-mt"
+		}
+		defines {
+			"_CRT_SECURE_NO_WARNINGS"
+		}
 		postbuildcommands {
 			("{COPY} ../Dependencies/FreeImage/bin ../bin/" ..outputdir.. "/PBRLoader"),
 			("{COPY} ../Dependencies/assimp/bin ../bin/" ..outputdir.. "/PBRLoader")
