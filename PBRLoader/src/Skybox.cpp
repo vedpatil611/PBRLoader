@@ -89,7 +89,7 @@ Skybox::Skybox(const char** faceLocations, Shader* shader)
 
 	glGenVertexArrays(1, &m_VAO);
 	glBindVertexArray(m_VAO);
-	glEnableVertexArrayAttrib(m_VAO, 0);
+	glDisableVertexAttribArray(m_VAO, 0);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * sizeof(float), 0);
 
@@ -100,6 +100,9 @@ Skybox::Skybox(const char** faceLocations, Shader* shader)
 
 Skybox::~Skybox()
 {
+	glDeleteVertexArrays(1, &m_VAO);
+	glDeleteBuffers(1, &m_VBO);
+	glDeleteBuffers(1, &m_IBO);
 }
 
 void Skybox::draw(const Window* window, const Camera* camera)
