@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Camera.h"
+#include "Mesh.h"
 #include "Shader.h"
 #include "Skybox.h"
 #include "Window.h"
@@ -9,15 +10,15 @@
 Camera* camera;
 Window* window;
 Shader* skyboxShader;
+Shader* basicShader;
 
 float deltaTime = 0.0f;
 float lastTime = 0.0f;
 
 int main()
 {
-	Window* window = new Window();
-
-	camera = new Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 5.0f, 1.0f);
+	window = new Window();
+	camera = new Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 5.0f, 5.0f);
 
 	const char* faces[] = {
 		"assets/skybox/right.jpg",
@@ -28,9 +29,24 @@ int main()
 		"assets/skybox/back.jpg"
 	};
 
-	Shader* skyboxShader = new Shader("shaders/skybox.vert.glsl", "shaders/skybox.frag.glsl");
+	skyboxShader = new Shader("shaders/skybox.vert.glsl", "shaders/skybox.frag.glsl");
+	basicShader = new Shader("shaders/basic.vert.glsl", "shaders/basic.frag.glsl");
 
 	Skybox skybox(faces, skyboxShader);
+
+	float floorVertices[] = {
+		-50.0f, 0.0f, -50.0f,
+		 50.0f, 0.0f, -50.0f,
+		 50.0f, 0.0f,  50.0f,
+		-50.0f, 0.0f,  50.0f,
+	};
+	unsigned short floorIndicies[] = {
+		0, 1, 2,
+		2, 3, 0
+	};
+	Mesh floor(floorVertices, 4 * 3, floorIndicies, 2 * 3, basicShader);
+	floor.setTranslation(glm::vec3(0.0f, -50.0f, 0.0f));
+	floor.setScaling(glm::vec3(3.0f, 3.0f, 3.0f));
 
 	while (!window->shouldClose())
 	{
@@ -43,12 +59,11 @@ int main()
 
 		camera->handleInputs(window->getKey(), window->getXChange(), window->getYChange(), deltaTime);
 		skybox.draw(window, camera);
+		floor.draw(window, camera);
 
 		window->swapBuffer();
-
 #ifdef DEBUG
-		GLenum err;
-		while ((err = glGetError()) != GL_NO_ERROR)
+		while (GLenum err = glGetError())
 		{
 			printf("open gl error code: %d\n", err);
 		}
@@ -56,6 +71,7 @@ int main()
 	}
 
 	delete skyboxShader;
+	delete basicShader;
 	delete camera;
 	delete window;
 	return 0;

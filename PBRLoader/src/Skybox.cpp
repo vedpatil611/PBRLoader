@@ -64,7 +64,7 @@ Skybox::Skybox(const char** faceLocations, Shader* shader)
 		 1.0f, -1.0f,  1.0f
 	};
 
-	unsigned int skyboxIndices[] = {
+	unsigned short skyboxIndices[] = {
 		0, 1, 2,
 		2, 1, 3,
 		2, 3, 5,
@@ -89,8 +89,8 @@ Skybox::Skybox(const char** faceLocations, Shader* shader)
 
 	glGenVertexArrays(1, &m_VAO);
 	glBindVertexArray(m_VAO);
-	glDisableVertexAttribArray(m_VAO, 0);
 
+	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * sizeof(float), 0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -119,8 +119,7 @@ void Skybox::draw(const Window* window, const Camera* camera)
 	glBindVertexArray(m_VAO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
 
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDrawElements(GL_TRIANGLES, 12 * 3, GL_UNSIGNED_INT, nullptr);
+	glDrawElements(GL_TRIANGLES, 12 * 3, GL_UNSIGNED_SHORT, nullptr);
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

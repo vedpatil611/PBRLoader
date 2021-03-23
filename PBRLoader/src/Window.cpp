@@ -16,6 +16,10 @@ Window::Window()
 		return;
 	}
 
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
 	m_Window = glfwCreateWindow(m_Width, m_Height, "PBR Loader", nullptr, nullptr);
 
 	if (!m_Window)
@@ -32,7 +36,11 @@ Window::Window()
 		throw std::runtime_error("Failed to init glad");
 
 	glViewport(0, 0, m_BufferWidth, m_BufferHeight);
-	m_Proj = glm::perspective(glm::radians(65.0f), (float) m_BufferWidth / m_BufferHeight, 0.01f, 100.0f);
+	glEnable(GL_DEPTH_TEST);
+
+	m_Proj = glm::perspective(glm::radians(65.0f), (float) m_BufferWidth / m_BufferHeight, 0.01f, 1000.0f);
+	//m_Proj = glm::perspective(glm::radians(65.0f), (float) 16 / 9, 0.01f, 1000.0f);
+	//m_Proj = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, -1000.0f, 1000.0f);
 
 	glfwSetWindowUserPointer(m_Window, this);
 	glfwSetKeyCallback(m_Window, &Window::keyCallback);
@@ -77,7 +85,7 @@ void Window::pollEvents()
 
 void Window::clearBuffer()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 

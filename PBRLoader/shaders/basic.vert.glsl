@@ -2,9 +2,9 @@
 
 layout (location = 0) in vec3 pos;
 
-uniform mat4 uModel = mat4(1.0f);
-uniform mat4 uView = mat4(1.0f);
-uniform mat4 uProj = mat4(1.0f);
+uniform mat4 uModel;
+uniform mat4 uView;
+uniform mat4 uProj;
 
 void main()
 {
