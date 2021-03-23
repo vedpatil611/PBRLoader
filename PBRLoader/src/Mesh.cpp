@@ -38,14 +38,17 @@ Mesh::~Mesh()
 
 void Mesh::setTranslation(glm::vec3 translation)
 {
+	m_Translate = translation;
 }
 
 void Mesh::setRotation(glm::vec3 rotation)
 {
+	m_Rotate = rotation;
 }
 
 void Mesh::setScaling(glm::vec3 scaling)
 {
+	m_Scale = scaling;
 }
 
 void Mesh::draw(const Window* window, const Camera* camera)

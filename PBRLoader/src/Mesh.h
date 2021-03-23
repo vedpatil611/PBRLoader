@@ -19,5 +19,9 @@ public:
 	void setRotation(glm::vec3 rotation);
 	void setScaling(glm::vec3 scaling);
 
+	inline glm::vec3 getTranslation() const { return m_Translate; }
+	inline glm::vec3 getRotation() const { return m_Rotate; }
+	inline glm::vec3 getScaling() const { return m_Scale; }
+
 	void draw(const class Window* window, const class Camera* camera);
 };
