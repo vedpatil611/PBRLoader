@@ -1,3 +1,6 @@
 [submodule "Dependencies/GLFW"]
 	path = Dependencies/GLFW
 	url = https://github.com/vedpatil611/glfw
+[submodule "PBRLoader/src/vendors/imgui-filebrowser"]
+	path = PBRLoader/src/vendors/imgui-filebrowser
+	url = https://github.com/AirGuanZ/imgui-filebrowser

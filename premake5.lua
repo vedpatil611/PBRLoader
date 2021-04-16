@@ -35,6 +35,7 @@ project "PBRLoader"
 
 	includedirs {
 		"PBRLoader/src",
+		"PBRLoader/src/vendors",
 		"%{IncludeDirs.GLFW}",
 		"%{IncludeDirs.GLAD}",
 		"%{IncludeDirs.FreeImage}",
@@ -62,7 +63,8 @@ project "PBRLoader"
 		"%{prj.name}/src/UI/**.h",
 		"%{prj.name}/src/UI/**.cpp",
 		"%{prj.name}/src/utils/**.h",
-		"%{prj.name}/src/utils/**.cpp"
+		"%{prj.name}/src/utils/**.cpp",
+		"%{prj.name}/src/vendors/imgui-filebrowser/**.h"
 	}
 
 	filter "system:windows"
