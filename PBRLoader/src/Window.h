@@ -23,6 +23,9 @@ public:
 	
 	inline int getBufferWidth() const { return m_BufferWidth; }
 	inline int getBufferHeight() const { return m_BufferHeight; }
+	inline int getWidth() const { return m_Width; }
+	inline int getHeight() const { return m_Height; }
+	inline GLFWwindow* getWindow() const { return m_Window; }
 	float getXChange();
 	float getYChange();
 	inline bool* getKey() { return m_Keys; }

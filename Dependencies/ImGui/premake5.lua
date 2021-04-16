@@ -6,13 +6,9 @@ project "ImGui"
 	objdir ("intermediate/" .. outputdir .. "/%{prj.name}")
 
 	files {
-		"src/**.h",
-		"src/**.cpp"
+		"src/ImGui/**.h",
+		"src/ImGui/**.cpp"
 	}
-
-	filter "system:linux"
-		pic "On"
-		staticruntime "On"
 
 	filter "configurations:Debug"
 		defines { "DEBUG" }

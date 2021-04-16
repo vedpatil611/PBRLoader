@@ -39,7 +39,8 @@ project "PBRLoader"
 		"%{IncludeDirs.GLAD}",
 		"%{IncludeDirs.FreeImage}",
 		"%{IncludeDirs.Assimp}",
-		"%{IncludeDirs.GLM}"
+		"%{IncludeDirs.GLM}",
+		"%{IncludeDirs.ImGui}"
 	}
 	
 	libdirs {
@@ -58,6 +59,8 @@ project "PBRLoader"
 		"%{prj.name}/shaders/**.glsl", 
 		"%{prj.name}/src/**.h", 
 		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/src/UI/**.h",
+		"%{prj.name}/src/UI/**.cpp",
 		"%{prj.name}/src/utils/**.h",
 		"%{prj.name}/src/utils/**.cpp"
 	}
