@@ -24,6 +24,8 @@ Texture::Texture(const char* texPath)
 	if (!dib)
 		throw std::runtime_error("Failed to load texture");
 
+	FreeImage_FlipVertical(dib);
+
 	bits = FreeImage_GetBits(dib);
 	m_Width = FreeImage_GetWidth(dib);
 	m_Heigth = FreeImage_GetHeight(dib);
@@ -36,9 +38,14 @@ Texture::Texture(const char* texPath)
 	
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Heigth, 0, GL_RGB, GL_UNSIGNED_BYTE, bits);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Heigth, 0, GL_BGRA, GL_UNSIGNED_BYTE, bits);
+	glGenerateMipmap(GL_TEXTURE_2D);
 
 	FreeImage_Unload(dib);
 }

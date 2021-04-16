@@ -5,6 +5,7 @@
 #include "Mesh.h"
 #include "Shader.h"
 #include "Skybox.h"
+#include "Texture.h"
 #include "Window.h"
 
 Camera* camera;
@@ -35,18 +36,19 @@ int main()
 	Skybox skybox(faces, skyboxShader);
 
 	float floorVertices[] = {
-		-50.0f, 0.0f, -50.0f,
-		 50.0f, 0.0f, -50.0f,
-		 50.0f, 0.0f,  50.0f,
-		-50.0f, 0.0f,  50.0f,
+		-50.0f, 0.0f, -50.0f,	0.0f, 0.0f,		//0
+		 50.0f, 0.0f, -50.0f,	1.0f, 0.0f,		//1
+		 50.0f, 0.0f,  50.0f,	1.0f, 1.0f,		//2
+		-50.0f, 0.0f,  50.0f,	0.0f, 1.0f,		//3
 	};
 	unsigned short floorIndicies[] = {
 		0, 1, 2,
 		2, 3, 0
 	};
-	Mesh floor(floorVertices, 4 * 3, floorIndicies, 2 * 3, basicShader);
+	Mesh floor(floorVertices, 4 * 5, floorIndicies, 2 * 3, basicShader);
 	floor.setTranslation(glm::vec3(0.0f, -50.0f, 0.0f));
-	floor.setScaling(glm::vec3(3.0f, 3.0f, 3.0f));
+	Texture tex("assets/textures/brick.png");
+	floor.setTexture(&tex);
 
 	while (!window->shouldClose())
 	{
@@ -62,6 +64,7 @@ int main()
 		floor.draw(window, camera);
 
 		window->swapBuffer();
+
 #ifdef DEBUG
 		while (GLenum err = glGetError())
 		{

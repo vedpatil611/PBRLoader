@@ -14,6 +14,8 @@ public:
 	Shader(const char* vertPath, const char* fragPath, const char* geoPath);
 	~Shader();
 
+	void setUniform1i(const char* uniformName, int uniformData);
+	void setUniform4f(const char* uniformName, float f1, float f2, float f3, float f4);
 	void setUniformMat4f(const char* uniformName, const glm::mat4& mat);
 
 	void bind() const;

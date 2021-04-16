@@ -36,11 +36,12 @@ Window::Window()
 		throw std::runtime_error("Failed to init glad");
 
 	glViewport(0, 0, m_BufferWidth, m_BufferHeight);
+	
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	m_Proj = glm::perspective(glm::radians(65.0f), (float) m_BufferWidth / m_BufferHeight, 0.01f, 1000.0f);
-	//m_Proj = glm::perspective(glm::radians(65.0f), (float) 16 / 9, 0.01f, 1000.0f);
-	//m_Proj = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, -1000.0f, 1000.0f);
 
 	glfwSetWindowUserPointer(m_Window, this);
 	glfwSetKeyCallback(m_Window, &Window::keyCallback);
@@ -114,11 +115,6 @@ void Window::keyCallback(GLFWwindow* window, int key, int code, int action, int 
 void Window::mouseKeyCallback(GLFWwindow* window, int key, int action, int mods)
 {
 	Window* currentWindow = static_cast<Window*>(glfwGetWindowUserPointer(window));
-
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-	{
-		glfwSetWindowShouldClose(window, true);
-	}
 
 	if (key >= 0 && key < 1024)
 	{
