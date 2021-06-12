@@ -33,6 +33,9 @@ project "PBRLoader"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("intermediate/" .. outputdir .. "/%{prj.name}")
 
+	defines {
+		"IMGUI_IMPL_OPENGL_LOADER_GLAD"
+	}
 	includedirs {
 		"PBRLoader/src",
 		"PBRLoader/src/vendors",
@@ -83,7 +86,8 @@ project "PBRLoader"
         links {
 			"dl",
 			"pthread",
-            "assimp"
+            "assimp",
+			"GL"
 		}
 
 	filter "configurations:Debug"
