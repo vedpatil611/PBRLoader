@@ -78,7 +78,7 @@ void Mesh::draw(const Window* window, const Camera* camera)
 
 	m_Texture->bind(1);
 	m_Shader->setUniform1i("uTex", 1);
-	m_Shader->setUniform4f("uColour", m_Colour.r, m_Colour.g, m_Colour.b, m_Colour.a);
+	//m_Shader->setUniform4f("uColour", m_Colour.r, m_Colour.g, m_Colour.b, m_Colour.a);
 
 	auto model = glm::translate(glm::mat4(1.0f), m_Translate);
 	model = glm::rotate(model, glm::radians(m_Rotate[0]), glm::vec3(1.0f, 0.0f, 0.0f));
