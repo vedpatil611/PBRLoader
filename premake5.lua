@@ -18,6 +18,7 @@ IncludeDirs = {}
 IncludeDirs["GLFW"] = "Dependencies/GLFW/include"
 IncludeDirs["GLAD"] = "Dependencies/GLAD/include"
 IncludeDirs["FreeImage"] = "Dependencies/FreeImage/include"
+IncludeDirs["FreeType"] = "Dependencies/freetype/include"
 IncludeDirs["ImGui"] = "Dependencies/ImGui/src"
 IncludeDirs["Assimp"] = "Dependencies/assimp/inlude"
 IncludeDirs["GLM"] = "Dependencies/GLM"
@@ -42,6 +43,7 @@ project "PBRLoader"
 		"%{IncludeDirs.GLFW}",
 		"%{IncludeDirs.GLAD}",
 		"%{IncludeDirs.FreeImage}",
+		"%{IncludeDirs.FreeType}",
 		"%{IncludeDirs.Assimp}",
 		"%{IncludeDirs.GLM}",
 		"%{IncludeDirs.ImGui}"
@@ -63,6 +65,8 @@ project "PBRLoader"
 		"%{prj.name}/shaders/**.glsl", 
 		"%{prj.name}/src/**.h", 
 		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/src/renderer/**.h",
+		"%{prj.name}/src/renderer/**.cpp",
 		"%{prj.name}/src/UI/**.h",
 		"%{prj.name}/src/UI/**.cpp",
 		"%{prj.name}/src/utils/**.h",
@@ -87,7 +91,8 @@ project "PBRLoader"
 			"dl",
 			"pthread",
             "assimp",
-			"GL"
+			"GL",
+			"freetype"
 		}
 
 	filter "configurations:Debug"
