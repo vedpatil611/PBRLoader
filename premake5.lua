@@ -51,6 +51,7 @@ project "PBRLoader"
 	
 	libdirs {
 		"Dependencies/FreeImage/libs",
+		"Dependencies/freetype/lib",
 		"Dependencies/assimp/lib"
 	}
 
@@ -58,7 +59,8 @@ project "PBRLoader"
 		"GLFW",
 		"GLAD",
 		"ImGui",
-		"FreeImage"
+		"FreeImage",
+		"freetype"
 	}
 
 	files { 
@@ -92,7 +94,6 @@ project "PBRLoader"
 			"pthread",
             "assimp",
 			"GL",
-			"freetype"
 		}
 
 	filter "configurations:Debug"
