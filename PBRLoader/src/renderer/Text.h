@@ -13,4 +13,5 @@ private:
 	glm::vec4 colour;
 public:
 	Text(const std::string& text, float x, float y, float scale, const glm::vec4& colour);
+	~Text();
 };

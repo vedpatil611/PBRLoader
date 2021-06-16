@@ -18,3 +18,9 @@ Text::Text(const std::string& text, float x, float y, float scale, const glm::ve
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 }
+
+Text::~Text()
+{
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+}

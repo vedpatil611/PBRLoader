@@ -17,6 +17,8 @@ class TextRenderer
 {
 private:
 	std::map<char, Character> characters;
+	unsigned int tex[128];
 public:
 	TextRenderer(const char* fontPath);
+	~TextRenderer();
 };
