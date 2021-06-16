@@ -2,9 +2,10 @@
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
-
 #include <glm/glm.hpp>
 #include <map>
+#include "Text.h"
+#include <Shader.h>
 
 struct Character {
 	unsigned int texID;
@@ -21,4 +22,6 @@ private:
 public:
 	TextRenderer(const char* fontPath);
 	~TextRenderer();
+
+	void renderText(const Text& text, Shader& shader);
 };

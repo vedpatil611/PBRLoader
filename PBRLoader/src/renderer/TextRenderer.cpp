@@ -49,3 +49,50 @@ TextRenderer::~TextRenderer()
 {
 	glDeleteTextures(128, tex);
 }
+
+void TextRenderer::renderText(const Text& text, Shader& shader)
+{
+	shader.bind();
+	auto& colour = text.colour;
+	shader.setUniform4f("uColour", colour.x, colour.y, colour.z, colour.w);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindVertexArray(text.getVAO());
+
+	float x = text.x;
+	float y = text.y;
+
+	for (char c : text.text)
+	{
+		Character ch = characters[c];
+
+		float xPos = x + ch.bearing.x * text.scale;
+		float yPos = y - (ch.size.y - ch.bearing.y) * text.scale;
+
+		float w = ch.size.x * text.scale;
+		float h = ch.size.y * text.scale;
+
+		float vertices[6][4] = {
+			{ xPos,     yPos + h,   0.0f, 0.0f },
+			{ xPos,     yPos,       0.0f, 1.0f },
+			{ xPos + w, yPos,       1.0f, 1.0f },
+
+			{ xPos,     yPos + h,   0.0f, 0.0f },
+			{ xPos + w, yPos,       1.0f, 1.0f },
+			{ xPos + w, yPos + h,   1.0f, 0.0f }
+		};
+
+		glBindTexture(GL_TEXTURE_2D, ch.texID);
+
+		glBindBuffer(GL_ARRAY_BUFFER, text.getVBO());
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		
+		x += (ch.advance >> 6) * text.scale;
+	}
+
+	glBindVertexArray(0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
