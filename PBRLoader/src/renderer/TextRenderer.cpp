@@ -17,6 +17,7 @@ TextRenderer::TextRenderer(const char* fontPath)
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
+	unsigned int tex[128];
 	glGenTextures(128, tex);
 	
 	for (unsigned char c = 0; c < 128; ++c)
@@ -47,7 +48,8 @@ TextRenderer::TextRenderer(const char* fontPath)
 
 TextRenderer::~TextRenderer()
 {
-	glDeleteTextures(128, tex);
+	for (auto [k, v] : characters)
+		glDeleteTextures(1, &v.texID);
 }
 
 void TextRenderer::renderText(const Text& text, Shader& shader)

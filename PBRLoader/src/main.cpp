@@ -73,7 +73,7 @@ int main()
 	textShader.setUniformMat4f("uProj", uiProj);
 	
 	TextRenderer textRenderer("assets/fonts/Hack-Regular.ttf");
-	Text fps("fps: 0", -490.0f, 450.0f, 1.0f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	Text fps("fps:0", -490.0f, 450.0f, 1.0f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 	
 	while (!window->shouldClose())
 	{
@@ -95,7 +95,7 @@ int main()
 		std::stringstream ss("");
 		if (deltaTime > 0)
 		{
-			ss << "fps: " << static_cast<int>(1 / deltaTime);
+			ss << "fps:" << static_cast<int>(1 / deltaTime);
 			fps.text = ss.str();
 		}
 		textRenderer.renderText(fps, textShader);
@@ -103,10 +103,10 @@ int main()
 		window->swapBuffer();
 
 #ifdef DEBUG
-	/*	while (GLenum err = glGetError())
+		while (GLenum err = glGetError())
 		{
 			printf("open gl error code: %d\n", err);
-		}*/
+		}
 #endif // DEBUG
 	}
 
