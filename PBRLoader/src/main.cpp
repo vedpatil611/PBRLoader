@@ -6,6 +6,7 @@
 #include <Mesh.h>
 #include <Shader.h>
 #include <Skybox.h>
+#include <TextureArray.h>
 #include <Texture.h>
 #include <Window.h>
 #include <ImGui/imgui.h>
@@ -32,6 +33,7 @@ int main()
 {
 	window = new Window();
 	camera = new Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 20.0f, 5.0f);
+	TextureArray texArray;
 
 	DockableWindow::init(window);
 
@@ -44,8 +46,8 @@ int main()
 		"assets/skybox/back.jpg"
 	};
 
-	skyboxShader = new Shader("shaders/skybox.vert.glsl", "shaders/skybox.frag.glsl");
 	basicShader = new Shader("shaders/basic.vert.glsl", "shaders/basic.frag.glsl");
+	skyboxShader = new Shader("shaders/skybox.vert.glsl", "shaders/skybox.frag.glsl");
 
 	Skybox skybox(faces, skyboxShader);
 
@@ -61,8 +63,9 @@ int main()
 	};
 	Mesh floor(floorVertices, 4 * 5, floorIndicies, 2 * 3, basicShader);
 	floor.setTranslation(glm::vec3(0.0f, -50.0f, 0.0f));
-	Texture tex("assets/textures/brick.png");
-	floor.setTexture(&tex);
+	
+
+	floor.setTexture(texArray["brick"]);
 
 	while (!window->shouldClose())
 	{
