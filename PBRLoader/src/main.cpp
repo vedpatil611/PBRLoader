@@ -12,6 +12,9 @@
 #include <ImGui/imgui.h>
 #include <imgui-filebrowser/imfilebrowser.h>
 #include <UI/DockableWindow.h>
+#include <renderer/Text.h>
+#include <renderer/TextRenderer.h>
+#include <sstream>
 
 Camera* camera;
 Window* window;
@@ -67,6 +70,14 @@ int main()
 
 	floor.setTexture(texArray["brick"]);
 
+	Shader textShader("shaders/text.vert.glsl", "shaders/text.frag.glsl");
+	textShader.bind();
+	auto uiProj = glm::ortho(-500.0f, 500.0f, -500.0f, 500.0f, -10.0f, 10.0f);
+	textShader.setUniformMat4f("uProj", uiProj);
+	
+	TextRenderer textRenderer("assets/fonts/Hack-Regular.ttf");
+	Text fps("fps:0", -490.0f, 450.0f, 1.0f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	
 	while (!window->shouldClose())
 	{
 		float now = static_cast<float>(glfwGetTime());
@@ -83,6 +94,14 @@ int main()
 		DockableWindow::begin();
 		propertyPage();
 		DockableWindow::end();
+		
+		std::stringstream ss("");
+		if (deltaTime > 0)
+		{
+			ss << "fps:" << static_cast<int>(1 / deltaTime);
+			fps.text = ss.str();
+		}
+		textRenderer.renderText(fps, textShader);
 
 		window->swapBuffer();
 

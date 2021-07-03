@@ -23,6 +23,7 @@ TextureArray::~TextureArray()
 	for(auto [key, tex] : m_Textures)
 		delete tex;
 }
+
 unsigned int TextureArray::size() const
 {
 	return m_Textures.size();
@@ -30,13 +31,18 @@ unsigned int TextureArray::size() const
 
 Texture*& TextureArray::operator[](const char* key)
 {
-	for(auto [k,t]: m_Textures)
-		printf("%s\n", k.c_str());
 	if(m_Textures.find(key) != m_Textures.end())
 		return m_Textures[key];
 	else
-	{
-		printf("njdsahk\n");
 		return m_Textures["null"];
-	}
+}
+
+TextureArray::iterator TextureArray::begin()
+{
+	return m_Textures.begin();
+}
+
+TextureArray::iterator TextureArray::end()
+{
+	return m_Textures.end();
 }
